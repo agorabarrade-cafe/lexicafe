@@ -1,0 +1,11 @@
+/_build/
+/deps/
+/priv/static/assets/vendor/*.js
+*.ez
+*.beam
+.env
+.DS_Store
+/.elixir_ls/
+__pycache__/
+*.pyc
+/priv/dictionary/es_lexicafe_extended.txt
