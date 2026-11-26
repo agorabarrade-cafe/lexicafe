@@ -1,0 +1,28 @@
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: lexicafe_dev
+      POSTGRES_USER: lexicafe
+      POSTGRES_PASSWORD: lexicafe
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lexicafe -d lexicafe_dev"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - lexicafe_pgdata:/var/lib/postgresql/data
+  app:
+    build: .
+    ports:
+      - "4000:4000"
+    environment:
+      MIX_ENV: dev
+      DATABASE_URL: ecto://lexicafe:lexicafe@db/lexicafe_dev
+      PORT: "4000"
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  lexicafe_pgdata:
