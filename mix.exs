@@ -13,6 +13,10 @@ defmodule Lexicafe.MixProject do
     ]
   end
 
+  def cli do
+    [preferred_envs: [precommit: :test]]
+  end
+
   def application do
     [
       mod: {Lexicafe.Application, []},
@@ -37,6 +41,7 @@ defmodule Lexicafe.MixProject do
     [
       setup: ["deps.get", "ecto.create", "ecto.migrate", "assets.vendor"],
       "assets.vendor": [&vendor_assets/1],
+      precommit: ["compile --warnings-as-errors", "test"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
     ]
   end
